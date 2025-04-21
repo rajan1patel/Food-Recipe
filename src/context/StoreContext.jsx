@@ -7,17 +7,24 @@ const StoreContext = ({ children }) => {
   const [fooditem, setfooditem] = useState([]);
   const [loading, setloading] = useState(false);
   const [error, seterror] = useState(null);
-  const[itemidforrecipe,setitemidforrecipe]=useState(null);
-  const[recipe,setrecipe]=useState(null);
-  const [fav,setfav]=useState([]);
+  const [itemidforrecipe, setitemidforrecipe] = useState(null);
+  const [recipe, setrecipe] = useState(null);
+  const [fav, setfav] = useState([]);
 
+  // let cpy = [...item];
   async function handleClick(e) {
     if (e) e.preventDefault();
+    if (item.trim() === "") {
+      alert("Search Box is empty");
+    }
+
     setloading(true);
     seterror(null); // reset previous error
 
     try {
-      const response = await fetch(`https://forkify-api.herokuapp.com/api/v2/recipes?search=${item}`);
+      const response = await fetch(
+        `https://forkify-api.herokuapp.com/api/v2/recipes?search=${item}`
+      );
       const result = await response.json();
 
       if (result?.data?.recipes?.length > 0) {
@@ -31,17 +38,16 @@ const StoreContext = ({ children }) => {
     } finally {
       setloading(false);
     }
- 
 
     // console.log(fooditem)
   }
 
   function handlefav(currentItem) {
     let cpyItem = [...fav];
-    
+
     // Check if item is already in favorites
-    const index = cpyItem.findIndex(item => item.id === currentItem.id);
-  
+    const index = cpyItem.findIndex((item) => item.id === currentItem.id);
+
     if (index === -1) {
       // Add if not present
       cpyItem.push(currentItem);
@@ -49,12 +55,10 @@ const StoreContext = ({ children }) => {
       // Remove if already present
       cpyItem.splice(index, 1);
     }
-  
+
     setfav(cpyItem);
   }
-  console.log(fav)
-  
- 
+  console.log(fav);
 
   return (
     <GlobalContext.Provider
@@ -71,9 +75,10 @@ const StoreContext = ({ children }) => {
         setitemidforrecipe,
         setrecipe,
         recipe,
-        fav,setfav,
+        fav,
+        setfav,
         handleClick,
-        handlefav
+        handlefav,
       }}
     >
       {children}

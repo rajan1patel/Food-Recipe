@@ -3,7 +3,8 @@ import { GlobalContext } from "../../context/StoreContext";
 import FoodCard from "../../components/FoodCard";
 
 const Home = () => {
-  const { fooditem } = useContext(GlobalContext);
+  const { fooditem ,loading} = useContext(GlobalContext);
+  if(loading) return   <div className="flex justify-center align-center mt-20 font-bold">Loading data! Please wait...</div>;
 
   return (
     <div className="px-6 py-8 bg-gray-50 min-h-screen">

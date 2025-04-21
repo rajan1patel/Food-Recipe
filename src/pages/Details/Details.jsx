@@ -56,7 +56,7 @@ const Details = () => {
     }
   }, [params.id, setloading, setrecipe]);
 
-  if (loading) return <div>Loading data! Please wait...</div>;
+  if (loading) return <div className="flex justify-center align-center mt-20 font-bold">Loading data! Please wait...</div>;
   // console.log(recipe);
 
   // function handlefav(){
